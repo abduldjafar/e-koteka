@@ -1,6 +1,0 @@
-[mongodb]
-url="mongodb://localhost:27017"
-Port="27017"
-database="test"
-user="mongoadmin"
-password="secret"
