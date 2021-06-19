@@ -7,6 +7,7 @@ import (
 	"user/entity"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type mongoCustomerUser struct{}
@@ -17,6 +18,7 @@ var (
 
 func (*mongoCustomerUser) Save(data interface{}) error {
 	trainer := data.(entity.CustomerUser)
+
 	_, err := db.Collection("users").InsertOne(context.TODO(), trainer)
 	if err != nil {
 		return err
@@ -26,12 +28,25 @@ func (*mongoCustomerUser) Save(data interface{}) error {
 }
 
 func (*mongoCustomerUser) Get(params ...interface{}) (interface{}, error) {
-	return nil, nil
+	var data entity.CustomerUser
+
+	id := params[0].(string)
+
+	objectId, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return nil, err
+	}
+	result := db.Collection("users").FindOne(context.TODO(), bson.M{"_id": objectId})
+
+	if err := result.Decode(&data); err != nil {
+		return nil, err
+	}
+	return data, nil
 
 }
 
 func (*mongoCustomerUser) GetAll(params ...interface{}) (interface{}, error) {
-	var results []*entity.CustomerUser
+	var results []*entity.CustomerUserResponses
 	filter := bson.D{{}}
 
 	cursor, err := db.Collection("users").Find(context.TODO(), filter)
@@ -43,7 +58,7 @@ func (*mongoCustomerUser) GetAll(params ...interface{}) (interface{}, error) {
 	for cursor.Next(context.TODO()) {
 
 		// create a value into which the single document can be decoded
-		var elem entity.CustomerUser
+		var elem entity.CustomerUserResponses
 		err := cursor.Decode(&elem)
 		if err != nil {
 			log.Fatal(err)

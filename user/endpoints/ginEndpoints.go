@@ -17,6 +17,7 @@ func (*ginEndpoints) ALL() interface{} {
 
 	ginRouter.POST("/v1/users", ginUserController.AddUser().(func(*gin.Context)))
 	ginRouter.GET("/v1/users/all", ginUserController.GetAllUsers().(func(*gin.Context)))
+	ginRouter.GET("/v1/users/:id", ginUserController.GetUser().(func(*gin.Context)))
 
 	return ginRouter
 

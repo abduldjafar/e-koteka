@@ -5,6 +5,7 @@ import "github.com/gin-gonic/gin"
 type Controller interface {
 	AddUser() interface{}
 	GetAllUsers() interface{}
+	GetUser() interface{}
 }
 
 func setupResponses(code int, message error, data interface{}) map[string]interface{} {

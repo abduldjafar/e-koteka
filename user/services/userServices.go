@@ -21,7 +21,12 @@ func (*userServices) Create(data interface{}) error {
 	return nil
 }
 func (*userServices) Find(params ...interface{}) (interface{}, error) {
-	return nil, nil
+	data, err := repo.Get(params...)
+
+	if err != nil {
+		return nil, err
+	}
+	return data.(entity.CustomerUser), nil
 }
 func (*userServices) FindAll(params ...interface{}) (interface{}, error) {
 	data, err := repo.GetAll()
@@ -29,7 +34,7 @@ func (*userServices) FindAll(params ...interface{}) (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	return data.([]*entity.CustomerUser), nil
+	return data.([]*entity.CustomerUserResponses), nil
 }
 func NewServices() Services {
 	return &userServices{}

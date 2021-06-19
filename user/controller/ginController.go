@@ -47,6 +47,21 @@ func (*userController) GetAllUsers() interface{} {
 		showResponses(http.StatusOK, nil, data, ginContext)
 	}
 }
+func (*userController) GetUser() interface{} {
+	return func(ginContext *gin.Context) {
+		id := ginContext.Param("id")
+		data, err := service.Find(id)
+
+		if err != nil {
+			log.Println(err.Error())
+			showResponses(http.StatusBadRequest, err, nil, ginContext)
+			return
+		}
+
+		showResponses(http.StatusOK, nil, data, ginContext)
+
+	}
+}
 func NewUserController() Controller {
 	return &userController{}
 }
