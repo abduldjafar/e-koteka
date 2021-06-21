@@ -3,14 +3,14 @@ package main
 import (
 	"user/endpoints"
 
-	"github.com/gin-gonic/gin"
+	"github.com/gofiber/fiber/v2"
 )
 
 var (
-	Api endpoints.Endpoints = endpoints.NewGinEndpoints()
+	Api endpoints.Endpoints = endpoints.FiberEndpoints()
 )
 
 func main() {
-	api := Api.ALL().(*gin.Engine)
-	api.Run()
+	api := Api.ALL().(*fiber.App)
+	api.Listen(":3030")
 }
