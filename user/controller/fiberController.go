@@ -24,17 +24,9 @@ func (*fiberController) AddUser() interface{} {
 
 		if err := service.Create(user); err != nil {
 			log.Println(err.Error())
-			return fiberContext.Status(400).JSON(
-				map[string]interface{}{
-					"responses": setupResponses(400, err, nil),
-				},
-			)
+			return fiberShowresponses(400, err, nil, fiberContext)
 		}
-		return fiberContext.Status(200).JSON(
-			map[string]interface{}{
-				"responses": setupResponses(200, nil, nil),
-			},
-		)
+		return fiberShowresponses(200, nil, nil, fiberContext)
 	}
 
 }
@@ -44,19 +36,10 @@ func (*fiberController) GetAllUsers() interface{} {
 		data, err := service.FindAll()
 		if err != nil {
 			log.Println(err.Error())
-			return fiberContext.Status(400).JSON(
-				map[string]interface{}{
-					"responses": setupResponses(400, err, nil),
-				},
-			)
+			return fiberShowresponses(400, err, nil, fiberContext)
 		}
 
-		return fiberContext.Status(200).JSON(
-			map[string]interface{}{
-				"responses": setupResponses(200, nil, data),
-			},
-		)
-
+		return fiberShowresponses(400, nil, data, fiberContext)
 	}
 }
 func (*fiberController) GetUser() interface{} {
@@ -66,18 +49,10 @@ func (*fiberController) GetUser() interface{} {
 
 		if err != nil {
 			log.Println(err.Error())
-			return fiberContext.Status(400).JSON(
-				map[string]interface{}{
-					"responses": setupResponses(400, err, nil),
-				},
-			)
+			return fiberShowresponses(400, err, nil, fiberContext)
 		}
 
-		return fiberContext.Status(200).JSON(
-			map[string]interface{}{
-				"responses": setupResponses(200, nil, data),
-			},
-		)
+		return fiberShowresponses(200, nil, data, fiberContext)
 	}
 }
 

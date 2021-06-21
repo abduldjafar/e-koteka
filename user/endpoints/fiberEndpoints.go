@@ -9,7 +9,11 @@ import (
 type fiberEndpoints struct{}
 
 var (
-	fiberRouter                               = fiber.New()
+	fiberRouter = fiber.New(
+		fiber.Config{
+			Concurrency: 1000000,
+		},
+	)
 	fiberUserController controller.Controller = controller.FiberController()
 )
 
