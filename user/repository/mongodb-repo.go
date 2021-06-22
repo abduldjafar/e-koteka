@@ -78,6 +78,34 @@ func (*mongoCustomerUser) Delete(param interface{}) error {
 
 }
 
+func (*mongoCustomerUser) Update(params ...interface{}) error {
+	id := params[0].(string)
+
+	objectId, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return err
+	}
+
+	for key, value := range params[1].(map[string]interface{}) {
+
+		_, err = db.Collection("users").UpdateOne(
+			context.TODO(),
+			bson.M{"_id": objectId},
+			bson.D{
+				{"$set", bson.D{{key, value}}},
+			},
+		)
+
+		if err != nil {
+			log.Fatal(err)
+			return err
+		}
+
+	}
+
+	return nil
+}
+
 func NewMongoRepository() Repository {
 	return &mongoCustomerUser{}
 }

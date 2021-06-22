@@ -23,6 +23,7 @@ func (*fiberEndpoints) ALL() interface{} {
 	fiberRouter.Post("/v1/users", fiberUserController.AddUser().(fiber.Handler))
 	fiberRouter.Get("/v1/users/all", fiberUserController.GetAllUsers().(fiber.Handler))
 	fiberRouter.Get("/v1/users/:id", fiberUserController.GetUser().(fiber.Handler))
+	fiberRouter.Put("/v1/users/:id", fiberUserController.UpdateUser().(fiber.Handler))
 	fiberRouter.Use(logger.New(logger.Config{
 		Format: "${pid} ${locals:requestid} ${status} - ${method} ${path}\n",
 		Output: os.Stdout,

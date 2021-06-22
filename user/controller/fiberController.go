@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"encoding/json"
 	"log"
 	"user/entity"
 
@@ -54,6 +55,36 @@ func (*fiberController) GetUser() interface{} {
 
 		return fiberShowresponses(200, nil, data, fiberContext)
 	}
+}
+
+func (*fiberController) UpdateUser() interface{} {
+	return func(fiberContext *fiber.Ctx) error {
+
+		var user entity.CustomerUser
+		var dataInInterface map[string]interface{}
+
+		id := fiberContext.Params("id")
+
+		if err := fiberContext.BodyParser(&user); err != nil {
+			log.Println(err.Error())
+			return fiberContext.Status(400).JSON(
+				map[string]interface{}{
+					"responses": setupResponses(400, err, nil),
+				},
+			)
+		}
+
+		marshalledData, _ := json.Marshal(user)
+		json.Unmarshal(marshalledData, &dataInInterface)
+
+		if err := service.Update(id, dataInInterface); err != nil {
+			log.Println(err.Error())
+			return fiberShowresponses(400, err, nil, fiberContext)
+		}
+
+		return fiberShowresponses(200, nil, nil, fiberContext)
+	}
+
 }
 
 func FiberController() Controller {

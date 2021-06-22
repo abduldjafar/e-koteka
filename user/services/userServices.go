@@ -36,6 +36,16 @@ func (*userServices) FindAll(params ...interface{}) (interface{}, error) {
 	}
 	return data.([]*entity.CustomerUserResponses), nil
 }
+
+func (*userServices) Update(params ...interface{}) error {
+	id := params[0].(string)
+
+	if err := repo.Update(id, params[1]); err != nil {
+		return err
+	}
+
+	return nil
+}
 func NewServices() Services {
 	return &userServices{}
 }

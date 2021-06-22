@@ -62,6 +62,10 @@ func (*userController) GetUser() interface{} {
 
 	}
 }
+
+func (*userController) UpdateUser() interface{} {
+	return nil
+}
 func NewUserController() Controller {
 	return &userController{}
 }

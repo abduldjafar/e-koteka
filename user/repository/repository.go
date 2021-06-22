@@ -5,4 +5,5 @@ type Repository interface {
 	GetAll(params ...interface{}) (interface{}, error)
 	Get(params ...interface{}) (interface{}, error)
 	Delete(param interface{}) error
+	Update(params ...interface{}) error
 }
