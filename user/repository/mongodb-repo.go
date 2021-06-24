@@ -73,7 +73,19 @@ func (*mongoCustomerUser) GetAll(params ...interface{}) (interface{}, error) {
 	return results, nil
 
 }
-func (*mongoCustomerUser) Delete(param interface{}) error {
+func (*mongoCustomerUser) Delete(params ...interface{}) error {
+
+	id := params[0].(string)
+
+	objectId, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return err
+	}
+	_, err = db.Collection("users").DeleteOne(context.TODO(), bson.M{"_id": objectId})
+
+	if err != nil {
+		return err
+	}
 	return nil
 
 }

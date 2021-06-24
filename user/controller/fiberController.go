@@ -87,6 +87,20 @@ func (*fiberController) UpdateUser() interface{} {
 
 }
 
+func (*fiberController) DeleteUser() interface{} {
+	return func(fiberContext *fiber.Ctx) error {
+
+		id := fiberContext.Params("id")
+
+		if err := service.Delete(id); err != nil {
+			log.Println(err.Error())
+			return fiberShowresponses(400, err, nil, fiberContext)
+		}
+
+		return fiberShowresponses(200, nil, nil, fiberContext)
+	}
+
+}
 func FiberController() Controller {
 	return &fiberController{}
 }

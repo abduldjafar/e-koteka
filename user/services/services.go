@@ -5,4 +5,5 @@ type Services interface {
 	Find(params ...interface{}) (interface{}, error)
 	FindAll(params ...interface{}) (interface{}, error)
 	Update(params ...interface{}) error
+	Delete(params ...interface{}) error
 }

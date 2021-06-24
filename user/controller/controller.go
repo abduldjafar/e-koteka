@@ -10,6 +10,7 @@ type Controller interface {
 	GetAllUsers() interface{}
 	GetUser() interface{}
 	UpdateUser() interface{}
+	DeleteUser() interface{}
 }
 
 func setupResponses(code int, message error, data interface{}) map[string]interface{} {

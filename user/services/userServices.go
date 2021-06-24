@@ -46,6 +46,16 @@ func (*userServices) Update(params ...interface{}) error {
 
 	return nil
 }
+
+func (*userServices) Delete(params ...interface{}) error {
+	id := params[0].(string)
+
+	if err := repo.Delete(id); err != nil {
+		return err
+	}
+
+	return nil
+}
 func NewServices() Services {
 	return &userServices{}
 }
